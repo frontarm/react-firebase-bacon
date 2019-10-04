@@ -2,6 +2,20 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 import { getResponseCount, postResponse } from './backend'
 
+const messages = {
+  base: {
+    error: 'Something went wrong',
+  },
+  email: {
+    invalid: "That email address doesn't look quite right.",
+    'not-unique': 'This email has already been used.',
+    required: "You'll need an email to join the list.",
+  },
+  name: {
+    required: 'Who are you, though?',
+  },
+}
+
 function App() {
   const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
@@ -33,11 +47,11 @@ function App() {
     try {
       const result = await postResponse({ email, name })
       if (result.status === 'error') {
-        let key = Object.keys(result.issues)[0]
-        let message = key + ' ' + result.issues[key]
         setStatus({
           type: 'error',
-          issue: message,
+          issues: result.issues || {
+            base: 'error',
+          },
         })
       } else {
         setStatus({
@@ -47,12 +61,15 @@ function App() {
     } catch (error) {
       setStatus({
         type: 'error',
-        issue: 'Something went wrong.',
+        issues: {
+          base: 'error',
+        },
       })
     }
   }
 
   const canSubmit = responseCount !== undefined && status.type !== 'pending'
+  const issues = status.issues || {}
   const content =
     status.type === 'success' ? (
       <p>
@@ -67,18 +84,20 @@ function App() {
           Where you are the customer. <br />
           Ad free. Launching soon.
         </p>
-        <label>
-          Name:{' '}
-          <input value={name} onChange={event => setName(event.target.value)} />
-        </label>
-        <label>
-          Email:{' '}
-          <input
-            value={email}
-            onChange={event => setEmail(event.target.value)}
-          />
-        </label>
-        {status.issue && <p>{status.issue}</p>}
+        <Field
+          label="Name"
+          message={messages.name[issues.name]}
+          value={name}
+          onChange={setName}
+        />
+        <Field
+          label="Email"
+          message={messages.email[issues.email]}
+          type="email"
+          value={email}
+          onChange={setEmail}
+        />
+        {issues.base && <p>{messages.base[issues.base]}</p>}
         <button type="submit" disabled={!canSubmit}>
           {responseCount === undefined
             ? `Loading`
@@ -91,5 +110,16 @@ function App() {
 
   return <div className="App">{content}</div>
 }
+
+/**
+ * Renders an <input> inside a <label>, with an optional message.
+ */
+const Field = ({ label, message, onChange, ...inputProps }) => (
+  <label>
+    {label}:{' '}
+    <input {...inputProps} onChange={event => onChange(event.target.value)} />
+    {message && <p>{message}</p>}
+  </label>
+)
 
 export default App
