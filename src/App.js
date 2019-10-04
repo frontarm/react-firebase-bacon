@@ -16,6 +16,19 @@ const messages = {
   },
 }
 
+function validate({ email, name }) {
+  let issues = {}
+  if (!name) {
+    issues.name = 'required'
+  }
+  if (!email) {
+    issues.email = 'required'
+  } else if (!/.+@.+/.test(email)) {
+    issues.email = 'invalid'
+  }
+  return Object.keys(issues).length ? issues : undefined
+}
+
 function App() {
   const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
@@ -39,6 +52,15 @@ function App() {
 
   const handleSubmit = async event => {
     event.preventDefault()
+
+    const issues = validate({ name, email })
+    if (issues) {
+      setStatus({
+        type: 'error',
+        issues,
+      })
+      return
+    }
 
     setStatus({
       type: 'pending',

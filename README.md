@@ -6,12 +6,13 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 031 - Add error messages
+Step 032 - Client side validation
 --------
 
 This step makes the following changes:
 
-- In `src/App.js`, add human-readable error messages based on the error codes returned by the `postResponse` API.
+- Adds a `validate` function in `src/App.js`
+- Uses the new `validate` function to detect invalid input on the client side, and show appropriate messages.
 
 Related lessons:
 
