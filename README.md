@@ -6,17 +6,21 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 020 - Fetching data from an API with effects
+Step 021 - Simple forms with useState
 --------
 
 This step makes the following changes:
 
-- Adds a `src/backend.js` file, with a `getResponseCount` function.
-- Use the new `getResponseCount` function in `src/App.js` to fetch the number of responses, and display it to the user.
+- Adds a form in `src/App.js`, with its state stored in hooks.
+- Displays a message when the form is submitted.
 
 Related lessons:
 
-- *TODO*
+- [Let's build a form](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/intro/)
+- [What are hooks anyway?](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/what-are-hooks/)
+- [Convert a class component to use hooks](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/class-to-function-exercise/)
+- [Multiple hooks and conditional state](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/multiple-hooks-conditional-state/)
+- [*Live exercise:* Storing form state](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/form-state-exercise/)
 
 
 License

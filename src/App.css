@@ -7,3 +7,8 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
+
+.App label {
+  display: block;
+  margin: 1rem 0;
+}
