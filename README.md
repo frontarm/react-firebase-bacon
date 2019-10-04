@@ -6,21 +6,17 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 010
+Step 020 - Fetching data from an API with effects
 --------
 
-This is the first step in the course! It contains:
+This step makes the following changes:
 
-- A project skeleton, generated with Create React App.
-- A component that renders "Hello world".
-- Favicons and metadata for Vouch -- the social network we'll be building. See `public/index.html`.
-- Configuration for Firebase hosting in `firebase.json`.
-- Configuration for the [Prettier](https://prettier.io/) code formatter in `.prettierrc`.
+- Adds a `src/backend.js` file, with a `getResponseCount` function.
+- Use the new `getResponseCount` function in `src/App.js` to fetch the number of responses, and display it to the user.
 
 Related lessons:
 
-- [Launch an app](https://frontarm.com/courses/react-and-bacon/getting-started/launch-an-app/)
-- [A tour of the source](https://frontarm.com/courses/react-and-bacon/getting-started/project-tour/)
+- *TODO*
 
 
 License
