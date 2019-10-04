@@ -29,6 +29,20 @@ function validate({ email, name }) {
   return Object.keys(issues).length ? issues : undefined
 }
 
+function issuesIntersection(x, y) {
+  if (!y || !x) {
+    return
+  }
+  let keys = Object.keys(y)
+  let intersection = {}
+  for (let key of keys) {
+    if (x[key] === y[key]) {
+      intersection[key] = x[key]
+    }
+  }
+  return intersection
+}
+
 function App() {
   const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
@@ -36,6 +50,7 @@ function App() {
   const [status, setStatus] = useState({
     type: 'fresh',
   })
+  const params = { name, email }
 
   useEffect(() => {
     getResponseCount().then(
@@ -53,7 +68,7 @@ function App() {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    const issues = validate({ name, email })
+    const issues = validate(params)
     if (issues) {
       setStatus({
         type: 'error',
@@ -67,13 +82,14 @@ function App() {
     })
 
     try {
-      const result = await postResponse({ email, name })
+      const result = await postResponse(params)
       if (result.status === 'error') {
         setStatus({
           type: 'error',
           issues: result.issues || {
             base: 'error',
           },
+          params,
         })
       } else {
         setStatus({
@@ -91,7 +107,20 @@ function App() {
   }
 
   const canSubmit = responseCount !== undefined && status.type !== 'pending'
-  const issues = status.issues || {}
+  const submitIssues = status.issues || {}
+  const validationIssues = validate(params)
+  const unresolvedIssues =
+    issuesIntersection(submitIssues, validationIssues) || {}
+
+  // As this issue depends on server state, it won't be picked up by validate,
+  // and thus it won't be in the intersection either.
+  if (
+    status.issues &&
+    status.issues.email === 'not-unique' &&
+    status.params.email === email
+  ) {
+    unresolvedIssues.email = 'not-unique'
+  }
   const content =
     status.type === 'success' ? (
       <p>
@@ -108,18 +137,18 @@ function App() {
         </p>
         <Field
           label="Name"
-          message={messages.name[issues.name]}
+          message={messages.name[unresolvedIssues.name]}
           value={name}
           onChange={setName}
         />
         <Field
           label="Email"
-          message={messages.email[issues.email]}
+          message={messages.email[unresolvedIssues.email]}
           type="email"
           value={email}
           onChange={setEmail}
         />
-        {issues.base && <p>{messages.base[issues.base]}</p>}
+        {submitIssues.base && <p>{messages.base[submitIssues.base]}</p>}
         <button type="submit" disabled={!canSubmit}>
           {responseCount === undefined
             ? `Loading`
