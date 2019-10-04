@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { getResponseCount } from './backend'
+import { getResponseCount, postResponse } from './backend'
 
 function App() {
   const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState({
+    type: 'fresh',
+  })
 
   useEffect(() => {
     getResponseCount().then(
@@ -21,42 +23,71 @@ function App() {
     )
   }, [])
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault()
-    setSubmitted(true)
+
+    setStatus({
+      type: 'pending',
+    })
+
+    try {
+      const result = await postResponse({ email, name })
+      if (result.status === 'error') {
+        let key = Object.keys(result.issues)[0]
+        let message = key + ' ' + result.issues[key]
+        setStatus({
+          type: 'error',
+          issue: message,
+        })
+      } else {
+        setStatus({
+          type: 'success',
+        })
+      }
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        issue: 'Something went wrong.',
+      })
+    }
   }
 
-  const canSubmit = responseCount !== undefined
-  const content = submitted ? (
-    <p>
-      Thanks for joining in! <br />
-      When we're ready to wow you, <br />
-      You'll get an email.
-    </p>
-  ) : (
-    <form onSubmit={handleSubmit}>
+  const canSubmit = responseCount !== undefined && status.type !== 'pending'
+  const content =
+    status.type === 'success' ? (
       <p>
-        A social network, <br />
-        Where you are the customer. <br />
-        Ad free. Launching soon.
+        Thanks for joining in! <br />
+        When we're ready to wow you, <br />
+        You'll get an email.
       </p>
-      <label>
-        Name:{' '}
-        <input value={name} onChange={event => setName(event.target.value)} />
-      </label>
-      <label>
-        Email:{' '}
-        <input value={email} onChange={event => setEmail(event.target.value)} />
-      </label>
-      <button type="submit" disabled={!canSubmit}>
-        {responseCount === undefined
-          ? `Loading`
-          : responseCount > 1
-          ? `Vouch with ${responseCount} others`
-          : `I'll vouch for that`}
-      </button>
-    </form>
-  )
+    ) : (
+      <form onSubmit={handleSubmit}>
+        <p>
+          A social network, <br />
+          Where you are the customer. <br />
+          Ad free. Launching soon.
+        </p>
+        <label>
+          Name:{' '}
+          <input value={name} onChange={event => setName(event.target.value)} />
+        </label>
+        <label>
+          Email:{' '}
+          <input
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+        </label>
+        {status.issue && <p>{status.issue}</p>}
+        <button type="submit" disabled={!canSubmit}>
+          {responseCount === undefined
+            ? `Loading`
+            : responseCount > 1
+            ? `Vouch with ${responseCount} others`
+            : `I'll vouch for that`}
+        </button>
+      </form>
+    )
 
   return <div className="App">{content}</div>
 }

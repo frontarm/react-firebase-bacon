@@ -6,21 +6,18 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 021 - Simple forms with useState
+Step 030 - Submitting form data to an API
 --------
 
 This step makes the following changes:
 
-- Adds a form in `src/App.js`, with its state stored in hooks.
-- Displays a message when the form is submitted.
+- Adds a `postResponse` function in `src/backend.js`
+- Use the new `postResponse` function in `src/App.js` to submit form data, then stores the response in state so that it can be displayed.
 
 Related lessons:
 
-- [Let's build a form](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/intro/)
-- [What are hooks anyway?](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/what-are-hooks/)
-- [Convert a class component to use hooks](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/class-to-function-exercise/)
-- [Multiple hooks and conditional state](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/multiple-hooks-conditional-state/)
-- [*Live exercise:* Storing form state](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/form-state-exercise/)
+- [Loading and error states](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/loading-error-states/)
+- [State management basics](https://frontarm.com/courses/react-and-bacon/forms-with-hooks/state-management-basics/)
 
 
 License
