@@ -48,28 +48,13 @@ export default function Landing({ navigate }) {
   const params = { name, email }
 
   useEffect(() => {
-    let hasBeenUnmounted = false
+    const ref = db.collection('counts').doc('responses')
 
-    db.collection('counts')
-      .doc('responses')
-      .get()
-      .then(
-        snapshot => {
-          if (!hasBeenUnmounted) {
-            setResponseCount(snapshot.data().count || 0)
-          }
-        },
-        error => {
-          if (!hasBeenUnmounted) {
-            // There's no need to display an error if we can't get the count.
-            // Just set it to zero to hide the count.
-            setResponseCount(0)
-          }
-        },
-      )
-    return () => {
-      hasBeenUnmounted = true
-    }
+    // There's no need to continue listening for the number of subscribers
+    // after the user has already subscribed.
+    return ref.onSnapshot(snapshot => {
+      setResponseCount((snapshot.exists && snapshot.data().count) || 0)
+    })
   }, [])
 
   const handleSubmit = async event => {
