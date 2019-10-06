@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
+import { beaconRing, colors, radii, shadows } from './theme'
 
 export const Field = ({ label, message, onChange, ...inputProps }) => (
   <StyledFieldLabel>
@@ -18,12 +19,10 @@ export const Input = props => (
 
 export const StyledButton = styled.button`
   border-radius: 9999px;
-  background-color: rgba(16, 32, 48);
+  background-color: ${colors.primary.default};
   border: none;
-  box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.12) inset,
-    -1px -1px 1px rgba(0, 0, 0, 0.08) inset, 0 0 5px 3px rgba(16, 32, 48, 0.01),
-    0 0 2px 0px rgba(16, 32, 48, 0.02);
-  color: rgba(255, 255, 255, 0.93);
+  box-shadow: ${shadows.bevel()}, ${shadows.drop()};
+  color: ${colors.text.reverse};
   cursor: pointer;
   display: flex;
   font-size: 1rem;
@@ -36,20 +35,7 @@ export const StyledButton = styled.button`
   transition: opacity 200ms ease-out;
   width: 100%;
 
-  ::after {
-    content: ' ';
-    position: absolute;
-    border-radius: 999px;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    z-index: -1;
-  }
-  :focus ::after {
-    box-shadow: 0 0 0 2px rgba(68, 136, 221, 0.75),
-      0 0 4px 3px rgba(68, 136, 221, 0.4);
-  }
+  ${beaconRing('::after', '9999px')}
 
   ${props =>
     props.disabled &&
@@ -59,10 +45,10 @@ export const StyledButton = styled.button`
 `
 
 export const StyledCard = styled.div`
-  background-color: #ffffff;
-  border: 1px solid #eaecf2;
-  border-radius: 8px;
-  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.01), 0 0 2px 0px rgba(0, 0, 0, 0.02);
+  background-color: ${colors.background.card};
+  border: 1px solid ${colors.border.default};
+  border-radius: ${radii.medium};
+  box-shadow: ${shadows.card()};
   margin: 0 auto;
   max-width: 380px;
   padding: 1rem 3rem;
@@ -78,7 +64,7 @@ export const StyledClamp = styled.div`
 `
 
 export const StyledFieldLabel = styled.label`
-  color: #334455;
+  color: ${colors.text.label};
   display: block;
   font-size: 0.8rem;
   font-weight: 600;
@@ -86,7 +72,7 @@ export const StyledFieldLabel = styled.label`
 `
 
 export const StyledFieldMessage = styled.div`
-  color: #733939;
+  color: ${colors.text.error};
   font-size: 0.85rem;
   line-height: 1.4rem;
   margin: 0.25rem 0 1rem;
@@ -94,7 +80,7 @@ export const StyledFieldMessage = styled.div`
 `
 
 export const StyledHaiku = styled.p`
-  color: #607080;
+  color: ${colors.text.alt};
   font-size: 1rem;
   line-height: 1.5rem;
   margin: 1.5rem 0;
@@ -106,33 +92,20 @@ const StyledInputWrapper = styled.div`
   position: relative;
 `
 export const StyledInput = styled.input`
-  border: 1px solid #e0e8ec;
-  border-radius: 4px;
-  box-shadow: 2px 2px 2px rgba(16, 32, 48, 0.03) inset;
+  border: 1px solid ${colors.border.field};
+  border-radius: ${radii.small};
+  box-shadow: ${shadows.sunk()};
   display: block;
   font-size: 1rem;
   padding: 0.5rem;
   outline: none;
   width: 100%;
 
-  + ${StyledInputOutline} {
-    content: ' ';
-    position: absolute;
-    border-radius: 4px;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    z-index: -1;
-  }
-  :focus + ${StyledInputOutline} {
-    box-shadow: 0 0 0 2px rgba(68, 136, 221, 0.75),
-      0 0 4px 3px rgba(68, 136, 221, 0.4);
-  }
+  ${beaconRing(` + ${StyledInputOutline}`, radii.small)}
 `
 
 export const StyledIssue = styled.p`
-  color: #733939;
+  color: ${colors.text.error};
   font-size: 0.75rem;
   margin-top: 0.75rem;
   text-align: center;

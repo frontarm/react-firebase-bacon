@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle } from 'styled-components/macro'
 import App from './App'
+import { colors, dimensions } from './theme'
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -10,11 +11,11 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    background-color: #f5f7fa;
+    background-color: ${colors.background.canvas};
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
       "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
       sans-serif;
-    font-size: 16px;
+    font-size: ${dimensions.oneRemInPixels}px;
     height: 100%;
     line-height: 1.5rem;
     min-height: 100%;
