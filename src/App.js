@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { css } from 'styled-components/macro'
 import { getResponseCount, postResponse } from './backend'
 import {
   Field,
@@ -8,6 +9,8 @@ import {
   StyledHaiku,
   StyledIssue,
 } from './components'
+import { ReactComponent as BrandLogo } from './logo.svg'
+import { ReactComponent as BrandText } from './vouch.svg'
 
 const messages = {
   base: {
@@ -170,7 +173,23 @@ function App() {
 
   return (
     <StyledClamp>
-      <StyledCard>{content}</StyledCard>
+      <StyledCard>
+        <BrandLogo
+          css={css`
+            height: 2rem;
+            margin: 1rem auto 0;
+            width: 100%;
+          `}
+        />
+        <BrandText
+          css={css`
+            height: 1rem;
+            margin: 0.5rem auto 0;
+            width: 100%;
+          `}
+        />
+        {content}
+      </StyledCard>
     </StyledClamp>
   )
 }
