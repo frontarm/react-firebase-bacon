@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import NotFound from 'routes/404'
 import Landing from 'routes/landing'
 import Privacy from 'routes/privacy'
+import Thanks from 'routes/thanks'
 import normalizePathname from 'utils/normalizePathname'
 
 const history = createBrowserHistory()
@@ -16,6 +17,9 @@ function getRoute(location) {
 
     case '/privacy':
       return <Privacy navigate={navigate} />
+
+    case '/thanks':
+      return <Thanks navigate={navigate} />
 
     default:
       return <NotFound navigate={navigate} />

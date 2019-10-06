@@ -93,9 +93,7 @@ export default function Landing({ navigate }) {
           params,
         })
       } else {
-        setStatus({
-          type: 'success',
-        })
+        navigate('/thanks')
       }
     } catch (error) {
       setStatus({
@@ -122,14 +120,9 @@ export default function Landing({ navigate }) {
   ) {
     unresolvedIssues.email = 'not-unique'
   }
-  const content =
-    status.type === 'success' ? (
-      <StyledHaiku>
-        Thanks for joining in! <br />
-        When we're ready to wow you, <br />
-        You'll get an email.
-      </StyledHaiku>
-    ) : (
+
+  return (
+    <NarrowCardLayout navigate={navigate}>
       <form onSubmit={handleSubmit}>
         <StyledHaiku>
           A social network, <br />
@@ -162,11 +155,6 @@ export default function Landing({ navigate }) {
           )}
         </StyledButton>
       </form>
-    )
-
-  return (
-    <NarrowCardLayout navigate={navigate}>
-      {content}
       <StyledLoadingBar
         active={status.type === 'pending'}
         css={css`
