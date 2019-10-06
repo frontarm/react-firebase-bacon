@@ -6,17 +6,10 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 064 - Development, staging, production
+Step 06x - Rest API
 --------
 
-This step makes the following changes:
-
-- Adds a dependency on [env-cmd](https://www.npmjs.com/package/env-cmd).
-- Splits the `build` script in `package.json` into two versions: one for your staging build, and one for a production build.
-
-Related lessons:
-
-- *TODO*
+This extra step contains the code for the REST API used earlier in the course. It's built with Firebase functions, using the same code as your actions.
 
 
 License

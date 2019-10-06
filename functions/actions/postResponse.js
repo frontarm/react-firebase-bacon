@@ -1,5 +1,4 @@
 const admin = require('firebase-admin')
-const functions = require('firebase-functions')
 
 const db = admin.firestore()
 const increment = admin.firestore.FieldValue.increment(1)
@@ -24,7 +23,7 @@ function validate({ email, name }) {
   }
 }
 
-exports.postResponse = functions.https.onCall(async ({ name, email }) => {
+module.exports = async ({ name, email }) => {
   let validationErrors = validate({ name, email })
   if (validationErrors) {
     return {
@@ -34,27 +33,32 @@ exports.postResponse = functions.https.onCall(async ({ name, email }) => {
     }
   }
 
-  let query = responses.where('email', '==', email)
-  let result = await query.get(query)
-  if (result.size) {
-    return {
-      status: 'error',
-      issues: {
-        email: 'not-unique',
-      },
+  let error = await db.runTransaction(async transaction => {
+    let query = responses.where('email', '==', email)
+    let result = await transaction.get(query)
+    if (result.size) {
+      return {
+        status: 'error',
+        code: 409,
+        issues: {
+          email: 'not-unique',
+        },
+      }
     }
-  }
 
-  let responseRef = responses.doc()
-  await responseRef.set({
-    email,
-    name,
+    let responseRef = responses.doc()
+    await transaction.create(responseRef, {
+      email,
+      name,
+    })
+
+    let countRef = counts.doc('responses')
+    await transaction.set(countRef, { count: increment }, { merge: true })
   })
 
-  let countRef = counts.doc('responses')
-  await countRef.set({ count: increment }, { merge: true })
-
-  return {
-    status: 'success',
-  }
-})
+  return (
+    error || {
+      status: 'success',
+    }
+  )
+}
