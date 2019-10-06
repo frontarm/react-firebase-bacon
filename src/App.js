@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { css } from 'styled-components/macro'
-import { getResponseCount, postResponse } from './backend'
-import {
-  Field,
-  StyledButton,
-  StyledCard,
-  StyledClamp,
-  StyledHaiku,
-  StyledIssue,
-} from './components'
-import { ReactComponent as BrandLogo } from './logo.svg'
-import { ReactComponent as BrandText } from './vouch.svg'
+
+import { getResponseCount, postResponse } from 'backend'
+import { StyledButton } from 'components/buttons'
+import { StyledCard } from 'components/cards'
+import { StyledNarrowClamp } from 'components/clamps'
+import { Field } from 'components/fields'
+import { StyledHaiku, StyledIssue } from 'components/typography'
+import { ReactComponent as BrandLogo } from 'media/logo.svg'
+import { ReactComponent as BrandText } from 'media/vouch.svg'
 
 const messages = {
   base: {
@@ -172,7 +170,7 @@ function App() {
     )
 
   return (
-    <StyledClamp>
+    <StyledNarrowClamp>
       <StyledCard>
         <BrandLogo
           css={css`
@@ -190,7 +188,7 @@ function App() {
         />
         {content}
       </StyledCard>
-    </StyledClamp>
+    </StyledNarrowClamp>
   )
 }
 

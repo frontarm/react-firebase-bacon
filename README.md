@@ -6,13 +6,15 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 045 - Media query helpers
+Step 046 - Filesystem structure
 --------
 
 This step makes the following changes:
 
-- Adds media query related constants and helpers to `src/theme.js`
-- Adjust the landing page's styles on smaller screens in `src/components.js`
+- Splits the `components.js` file into a `components` directory with a number of different files.
+- Adds a `globalStyles.js` file for the app's global styles.
+- Moves the image files into a `media` directory.
+- Adds an `jsconfig.json` file, which among other things, tells Create React App that it should look in the `src` folder for modules that it can't find in `node_modules`.
 
 Related lessons:
 

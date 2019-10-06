@@ -32,6 +32,7 @@ export const colors = {
 }
 
 export const dimensions = {
+  narrowClampWidth: '380px',
   oneRemInPixels: 16,
 }
 
