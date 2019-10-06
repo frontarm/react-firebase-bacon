@@ -4,17 +4,22 @@ import styled, { css } from 'styled-components/macro'
 export const Field = ({ label, message, onChange, ...inputProps }) => (
   <StyledFieldLabel>
     {label}
-    <StyledInput
-      {...inputProps}
-      onChange={event => onChange(event.target.value)}
-    />
+    <Input {...inputProps} onChange={event => onChange(event.target.value)} />
     {message && <StyledFieldMessage>{message}</StyledFieldMessage>}
   </StyledFieldLabel>
+)
+
+export const Input = props => (
+  <StyledInputWrapper>
+    <StyledInput {...props} />
+    <StyledInputOutline />
+  </StyledInputWrapper>
 )
 
 export const StyledButton = styled.button`
   border-radius: 9999px;
   background-color: rgba(16, 32, 48);
+  border: none;
   box-shadow: 1px 1px 1px rgba(255, 255, 255, 0.12) inset,
     -1px -1px 1px rgba(0, 0, 0, 0.08) inset, 0 0 5px 3px rgba(16, 32, 48, 0.01),
     0 0 2px 0px rgba(16, 32, 48, 0.02);
@@ -25,10 +30,26 @@ export const StyledButton = styled.button`
   justify-content: center;
   line-height: 1rem;
   margin: 1rem 0;
+  outline: none;
   padding: 0.5rem;
   position: relative;
   transition: opacity 200ms ease-out;
   width: 100%;
+
+  ::after {
+    content: ' ';
+    position: absolute;
+    border-radius: 999px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: -1;
+  }
+  :focus ::after {
+    box-shadow: 0 0 0 2px rgba(68, 136, 221, 0.75),
+      0 0 4px 3px rgba(68, 136, 221, 0.4);
+  }
 
   ${props =>
     props.disabled &&
@@ -80,6 +101,10 @@ export const StyledHaiku = styled.p`
   text-align: center;
 `
 
+const StyledInputOutline = styled.div``
+const StyledInputWrapper = styled.div`
+  position: relative;
+`
 export const StyledInput = styled.input`
   border: 1px solid #e0e8ec;
   border-radius: 4px;
@@ -87,7 +112,23 @@ export const StyledInput = styled.input`
   display: block;
   font-size: 1rem;
   padding: 0.5rem;
+  outline: none;
   width: 100%;
+
+  + ${StyledInputOutline} {
+    content: ' ';
+    position: absolute;
+    border-radius: 4px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: -1;
+  }
+  :focus + ${StyledInputOutline} {
+    box-shadow: 0 0 0 2px rgba(68, 136, 221, 0.75),
+      0 0 4px 3px rgba(68, 136, 221, 0.4);
+  }
 `
 
 export const StyledIssue = styled.p`

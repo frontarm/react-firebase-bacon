@@ -6,13 +6,12 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 042 - Adding images
+Step 043 - Focus rings with nested styles
 --------
 
 This step makes the following changes:
 
-- Adds SVG files with the Vouch brand.
-- Imports these images as React components within `src/App.js`, and renders them with at the top of the page, styled with css props.
+- Adds focus styles using nested pseudo-classes, and nested components selectors
 
 Related lessons:
 
