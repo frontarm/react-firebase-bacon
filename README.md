@@ -6,13 +6,13 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 044 - Theme files and style helpers
+Step 045 - Media query helpers
 --------
 
 This step makes the following changes:
 
-- Extracts common colors, shadows, and other constants from the styles in `src/components.js` and `src/index.js`, and moves them into a `src/theme.js` file.
-- Creates a helper function to add focus rings to styled components, placing it in `src/theme.js`.
+- Adds media query related constants and helpers to `src/theme.js`
+- Adjust the landing page's styles on smaller screens in `src/components.js`
 
 Related lessons:
 

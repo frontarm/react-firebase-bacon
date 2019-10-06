@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components/macro'
-import { beaconRing, colors, radii, shadows } from './theme'
+import { beaconRing, colors, media, radii, shadows } from './theme'
 
 export const Field = ({ label, message, onChange, ...inputProps }) => (
   <StyledFieldLabel>
@@ -55,12 +55,20 @@ export const StyledCard = styled.div`
   position: relative;
   overflow: hidden;
   z-index: 0;
+
+  ${media.smallPhoneOnly`
+    padding: 1rem 2rem;
+  `}
 `
 
 export const StyledClamp = styled.div`
   margin: 0 auto;
   max-width: 380px;
   padding: 4rem 1rem;
+
+  ${media.phoneOnly`
+    padding: 1rem;
+  `}
 `
 
 export const StyledFieldLabel = styled.label`
@@ -85,6 +93,11 @@ export const StyledHaiku = styled.p`
   line-height: 1.5rem;
   margin: 1.5rem 0;
   text-align: center;
+
+  ${media.smallPhoneOnly`
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  `}
 `
 
 const StyledInputOutline = styled.div``

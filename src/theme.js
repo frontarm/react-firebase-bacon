@@ -1,5 +1,10 @@
 import { css } from 'styled-components/macro'
 
+export const breakpoints = {
+  mediumPhonePlus: '360px',
+  tabletPlus: '768px',
+}
+
 export const colors = {
   background: {
     canvas: '#f5f7fa',
@@ -28,6 +33,25 @@ export const colors = {
 
 export const dimensions = {
   oneRemInPixels: 16,
+}
+
+const mediaFactory = query => (...args) => css`
+  @media screen and ${query} {
+    ${css.apply(null, args)}
+  }
+`
+
+export const mediaQueries = {
+  smallPhoneOnly: `(max-width: calc(${breakpoints.mediumPhonePlus} - 1px))`,
+  phoneOnly: `(max-width: calc(${breakpoints.tabletPlus} - 1px))`,
+  mediumPhonePlus: `(min-width: ${breakpoints.mediumPhonePlus})`,
+  tabletPlus: `(min-width: ${breakpoints.tabletPlus})`,
+}
+export const media = {
+  smallPhoneOnly: mediaFactory(mediaQueries.smallPhoneOnly),
+  phoneOnly: mediaFactory(mediaQueries.phoneOnly),
+  mediumPhonePlus: mediaFactory(mediaQueries.mediumPhonePlus),
+  tabletPlus: mediaFactory(mediaQueries.tabletPlus),
 }
 
 export const radii = {
