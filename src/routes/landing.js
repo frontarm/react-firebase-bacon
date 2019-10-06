@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { css } from 'styled-components/macro'
 
-import { functions } from 'backend'
+import { db, functions } from 'backend'
 import { StyledButton } from 'components/buttons'
 import NarrowCardLayout from 'components/narrowCardLayout'
 import { Field } from 'components/fields'
@@ -10,7 +10,6 @@ import { StyledHaiku, StyledIssue } from 'components/typography'
 import { issuesIntersection } from 'utils/issues'
 
 const postResponse = functions.httpsCallable('actions-postResponse')
-const getResponseCount = functions.httpsCallable('actions-getResponseCount')
 
 const messages = {
   base: {
@@ -50,20 +49,24 @@ export default function Landing({ navigate }) {
 
   useEffect(() => {
     let hasBeenUnmounted = false
-    getResponseCount().then(
-      ({ data: count }) => {
-        if (!hasBeenUnmounted) {
-          setResponseCount(count || 0)
-        }
-      },
-      () => {
-        if (!hasBeenUnmounted) {
-          // There's no need to display an error if we can't get the count.
-          // Just set it to zero to hide the count.
-          setResponseCount(0)
-        }
-      },
-    )
+
+    db.collection('counts')
+      .doc('responses')
+      .get()
+      .then(
+        snapshot => {
+          if (!hasBeenUnmounted) {
+            setResponseCount(snapshot.data().count || 0)
+          }
+        },
+        error => {
+          if (!hasBeenUnmounted) {
+            // There's no need to display an error if we can't get the count.
+            // Just set it to zero to hide the count.
+            setResponseCount(0)
+          }
+        },
+      )
     return () => {
       hasBeenUnmounted = true
     }

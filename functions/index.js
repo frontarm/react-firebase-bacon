@@ -5,6 +5,5 @@ admin.initializeApp({
 })
 
 exports.actions = {
-  ...require('./actions/getResponseCount'),
   ...require('./actions/postResponse'),
 }

@@ -6,18 +6,15 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 061 - Firebase functions
+Step 062 - Counts, costs and caches
 --------
 
 This step makes the following changes:
 
-- Modify `firestore.rules` to lock down the database completely
-- Add the `functions` directory, with actions to post responses and get the response count
-- Add [npm-run-all](https://www.npmjs.com/package/npm-run-all) to dependencies
-- Modify the scripts field of `package.json`, so that running `npm start` or `yarn start` will start both the CRA and Firebase dev servers
-- Add the `functions/.serviceaccount.json` file to `.gitignore` -- you'll need to add it yourself to get the example working
-- Initialize Firebase functions client-side in `backend.js`
-- Update the landing route to use Firebase functions when posting responses, and when fetching the latest response count
+- In the backend's `postResponse` action, increment a response counter for each successfully saved response
+- Update `firestore.rules` to allow anybody to read the response count
+- In the landing route, read the response count directly from firestore
+- Remove the `getResponseCount` backend action, as it is no longer needed
 
 Related lessons:
 

@@ -2,6 +2,8 @@ const admin = require('firebase-admin')
 const functions = require('firebase-functions')
 
 const db = admin.firestore()
+const increment = admin.firestore.FieldValue.increment(1)
+const counts = db.collection('counts')
 const responses = db.collection('responses')
 
 function validate({ email, name }) {
@@ -48,6 +50,9 @@ exports.postResponse = functions.https.onCall(async ({ name, email }) => {
     email,
     name,
   })
+
+  let countRef = counts.doc('responses')
+  await countRef.set({ count: increment }, { merge: true })
 
   return {
     status: 'success',
