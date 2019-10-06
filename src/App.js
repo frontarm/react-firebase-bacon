@@ -59,6 +59,20 @@ function issuesIntersection(x, y) {
 }
 
 function App() {
+  const [location, setLocation] = useState(history.location)
+
+  useEffect(() => {
+    history.listen(setLocation)
+  }, [])
+
+  if (location.pathname === '/') {
+    return <Landing />
+  } else {
+    return <div>404 page went for a long walk</div>
+  }
+}
+
+function Landing() {
   const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')

@@ -6,14 +6,12 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 050 - History and links
+Step 051 - Routing and subscriptions
 --------
 
 This step makes the following changes:
 
-- Adds the [history](https://npmjs.com/package/history) package as a dependency.
-- Creates a `history` object in `App.js`.
-- Adds `<Link>` and `<StyledLink>` components in `components/links.js`, to allow navigation without reloading the page, using the browser history API.
+- In `App.js`, the App component now subscribes to the history object, and uses it to decide what to render.
 
 Related lessons:
 
