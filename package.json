@@ -11,13 +11,15 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
+    "env-cmd": "^10.0.1",
     "npm-run-all": "4.1.5"
   },
   "scripts": {
     "start:functions": "firebase serve --only functions:api",
     "start:client": "react-scripts start",
     "start": "npm-run-all --parallel start:*",
-    "build": "react-scripts build",
+    "build:production": "react-scripts build",
+    "build:development": "env-cmd -f .env.development.local react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
