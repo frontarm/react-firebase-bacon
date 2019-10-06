@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './App.css'
+import { css } from 'styled-components/macro'
 import { getResponseCount, postResponse } from './backend'
 
 const messages = {
@@ -159,14 +159,31 @@ function App() {
       </form>
     )
 
-  return <div className="App">{content}</div>
+  return (
+    <div
+      css={css`
+        text-align: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: calc(10px + 2vmin);
+      `}>
+      {content}
+    </div>
+  )
 }
 
 /**
  * Renders an <input> inside a <label>, with an optional message.
  */
 const Field = ({ label, message, onChange, ...inputProps }) => (
-  <label>
+  <label
+    css={css`
+      display: block;
+      margin: 1rem 0;
+    `}>
     {label}:{' '}
     <input {...inputProps} onChange={event => onChange(event.target.value)} />
     {message && <p>{message}</p>}
