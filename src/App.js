@@ -1,3 +1,4 @@
+import { createBrowserHistory } from 'history'
 import React, { useEffect, useState } from 'react'
 import { css } from 'styled-components/macro'
 
@@ -6,10 +7,15 @@ import { StyledButton } from 'components/buttons'
 import { StyledCard } from 'components/cards'
 import { StyledNarrowClamp } from 'components/clamps'
 import { Field } from 'components/fields'
+import { Link, StyledLink } from 'components/links'
 import { StyledLoadingBar, StyledSpinner } from 'components/loadingIndicators'
 import { StyledHaiku, StyledIssue } from 'components/typography'
 import { ReactComponent as BrandLogo } from 'media/logo.svg'
 import { ReactComponent as BrandText } from 'media/vouch.svg'
+import { colors } from 'theme'
+
+const history = createBrowserHistory()
+const navigate = path => history.push(path)
 
 const messages = {
   base: {
@@ -175,20 +181,27 @@ function App() {
   return (
     <StyledNarrowClamp>
       <StyledCard>
-        <BrandLogo
+        <Link
+          href="/"
+          navigate={navigate}
           css={css`
-            height: 2rem;
-            margin: 1rem auto 0;
-            width: 100%;
-          `}
-        />
-        <BrandText
-          css={css`
-            height: 1rem;
-            margin: 0.5rem auto 0;
-            width: 100%;
-          `}
-        />
+            display: block;
+          `}>
+          <BrandLogo
+            css={css`
+              height: 2rem;
+              margin: 1rem auto 0;
+              width: 100%;
+            `}
+          />
+          <BrandText
+            css={css`
+              height: 1rem;
+              margin: 0.5rem auto 0;
+              width: 100%;
+            `}
+          />
+        </Link>
         {content}
         <StyledLoadingBar
           active={status.type === 'pending'}
@@ -200,6 +213,33 @@ function App() {
           `}
         />
       </StyledCard>
+      <footer
+        css={css`
+          color: ${colors.text.alt};
+          font-size: 80%;
+          text-align: center;
+          margin: 0.5rem auto 2rem;
+        `}>
+        <StyledLink
+          color={colors.text.alt}
+          href="/privacy"
+          navigate={navigate}
+          size="80%">
+          Privacy Policy
+        </StyledLink>
+        <span
+          css={css`
+            margin: 0 0.5rem;
+          `}>
+          &middot;
+        </span>
+        <StyledLink
+          color={colors.text.alt}
+          href="https://github.com/frontarm/react-firebase-bacon"
+          size="80%">
+          See source at GitHub
+        </StyledLink>
+      </footer>
     </StyledNarrowClamp>
   )
 }
