@@ -6,15 +6,13 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 046 - Filesystem structure
+Step 047 - Animations and loading indicators
 --------
 
 This step makes the following changes:
 
-- Splits the `components.js` file into a `components` directory with a number of different files.
-- Adds a `globalStyles.js` file for the app's global styles.
-- Moves the image files into a `media` directory.
-- Adds an `jsconfig.json` file, which among other things, tells Create React App that it should look in the `src` folder for modules that it can't find in `node_modules`.
+- Add animated loading indicator components in `components/loadingIndicators.js`
+- Use these loading indicators in `App.js` to indicate activity.
 
 Related lessons:
 

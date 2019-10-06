@@ -6,6 +6,7 @@ import { StyledButton } from 'components/buttons'
 import { StyledCard } from 'components/cards'
 import { StyledNarrowClamp } from 'components/clamps'
 import { Field } from 'components/fields'
+import { StyledLoadingBar, StyledSpinner } from 'components/loadingIndicators'
 import { StyledHaiku, StyledIssue } from 'components/typography'
 import { ReactComponent as BrandLogo } from 'media/logo.svg'
 import { ReactComponent as BrandText } from 'media/vouch.svg'
@@ -160,11 +161,13 @@ function App() {
           <StyledIssue>{messages.base[submitIssues.base]}</StyledIssue>
         )}
         <StyledButton type="submit" disabled={!canSubmit}>
-          {responseCount === undefined
-            ? `Loading`
-            : responseCount > 1
-            ? `Vouch with ${responseCount} others`
-            : `I'll vouch for that`}
+          {responseCount === undefined ? (
+            <StyledSpinner size="1rem" />
+          ) : responseCount > 1 ? (
+            `Vouch with ${responseCount} others`
+          ) : (
+            `I'll vouch for that`
+          )}
         </StyledButton>
       </form>
     )
@@ -187,6 +190,15 @@ function App() {
           `}
         />
         {content}
+        <StyledLoadingBar
+          active={status.type === 'pending'}
+          css={css`
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+          `}
+        />
       </StyledCard>
     </StyledNarrowClamp>
   )
