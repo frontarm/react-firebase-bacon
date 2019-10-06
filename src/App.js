@@ -61,9 +61,7 @@ function issuesIntersection(x, y) {
 function App() {
   const [location, setLocation] = useState(history.location)
 
-  useEffect(() => {
-    history.listen(setLocation)
-  }, [])
+  useEffect(() => history.listen(setLocation), [])
 
   if (location.pathname === '/') {
     return <Landing />
@@ -82,16 +80,24 @@ function Landing() {
   const params = { name, email }
 
   useEffect(() => {
+    let hasBeenUnmounted = false
     getResponseCount().then(
       count => {
-        setResponseCount(count || 0)
+        if (!hasBeenUnmounted) {
+          setResponseCount(count || 0)
+        }
       },
       () => {
-        // There's no need to display an error if we can't get the count.
-        // Just set it to zero to hide the count.
-        setResponseCount(0)
+        if (!hasBeenUnmounted) {
+          // There's no need to display an error if we can't get the count.
+          // Just set it to zero to hide the count.
+          setResponseCount(0)
+        }
       },
     )
+    return () => {
+      hasBeenUnmounted = true
+    }
   }, [])
 
   const handleSubmit = async event => {
