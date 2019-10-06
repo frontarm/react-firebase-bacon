@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { css } from 'styled-components/macro'
 
-import { getResponseCount, postResponse } from 'backend'
+import { db } from 'backend'
 import { StyledButton } from 'components/buttons'
 import NarrowCardLayout from 'components/narrowCardLayout'
 import { Field } from 'components/fields'
@@ -37,34 +37,13 @@ function validate({ email, name }) {
 }
 
 export default function Landing({ navigate }) {
-  const [responseCount, setResponseCount] = useState(undefined)
+  const [responseCount, setResponseCount] = useState(0)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState({
     type: 'fresh',
   })
   const params = { name, email }
-
-  useEffect(() => {
-    let hasBeenUnmounted = false
-    getResponseCount().then(
-      count => {
-        if (!hasBeenUnmounted) {
-          setResponseCount(count || 0)
-        }
-      },
-      () => {
-        if (!hasBeenUnmounted) {
-          // There's no need to display an error if we can't get the count.
-          // Just set it to zero to hide the count.
-          setResponseCount(0)
-        }
-      },
-    )
-    return () => {
-      hasBeenUnmounted = true
-    }
-  }, [])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -83,19 +62,13 @@ export default function Landing({ navigate }) {
     })
 
     try {
-      const result = await postResponse(params)
-      if (result.status === 'error') {
-        setStatus({
-          type: 'error',
-          issues: result.issues || {
-            base: 'error',
-          },
-          params,
-        })
-      } else {
-        navigate('/thanks')
-      }
+      await db
+        .collection('responses')
+        .doc()
+        .set(params)
+      navigate('/thanks')
     } catch (error) {
+      console.error(error)
       setStatus({
         type: 'error',
         issues: {
