@@ -6,17 +6,18 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 060 - Firestore configuration
+Step 061 - Firebase functions
 --------
 
 This step makes the following changes:
 
-- Add the [firebase](https://npmjs.com/package/firebase) package as a dependency.
-- Add a `firestore.rules` file that (mostly) locks down the firestore database, and tell Firebase to use it in `firebase.json`.
-- Add `src/config.js`, which exports an object with the app's config, as set by your environment variables at build time.
-- Add an `.env.example` file (you can rename this `.env.local` and add your Firebase configuration, to set your environment variables for config.js).
-- Replace `src/backend.js` with code to initialize firestore.
-- Remove code to display a response count from the Landing route, and replace the call to the `postResponse` function with a direct call to Firestore.
+- Modify `firestore.rules` to lock down the database completely
+- Add the `functions` directory, with actions to post responses and get the response count
+- Add [npm-run-all](https://www.npmjs.com/package/npm-run-all) to dependencies
+- Modify the scripts field of `package.json`, so that running `npm start` or `yarn start` will start both the CRA and Firebase dev servers
+- Add the `functions/.serviceaccount.json` file to `.gitignore` -- you'll need to add it yourself to get the example working
+- Initialize Firebase functions client-side in `backend.js`
+- Update the landing route to use Firebase functions when posting responses, and when fetching the latest response count
 
 Related lessons:
 

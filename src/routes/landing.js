@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from 'styled-components/macro'
 
-import { db } from 'backend'
+import { functions } from 'backend'
 import { StyledButton } from 'components/buttons'
 import NarrowCardLayout from 'components/narrowCardLayout'
 import { Field } from 'components/fields'
 import { StyledLoadingBar, StyledSpinner } from 'components/loadingIndicators'
 import { StyledHaiku, StyledIssue } from 'components/typography'
 import { issuesIntersection } from 'utils/issues'
+
+const postResponse = functions.httpsCallable('actions-postResponse')
+const getResponseCount = functions.httpsCallable('actions-getResponseCount')
 
 const messages = {
   base: {
@@ -37,13 +40,34 @@ function validate({ email, name }) {
 }
 
 export default function Landing({ navigate }) {
-  const [responseCount, setResponseCount] = useState(0)
+  const [responseCount, setResponseCount] = useState(undefined)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState({
     type: 'fresh',
   })
   const params = { name, email }
+
+  useEffect(() => {
+    let hasBeenUnmounted = false
+    getResponseCount().then(
+      ({ data: count }) => {
+        if (!hasBeenUnmounted) {
+          setResponseCount(count || 0)
+        }
+      },
+      () => {
+        if (!hasBeenUnmounted) {
+          // There's no need to display an error if we can't get the count.
+          // Just set it to zero to hide the count.
+          setResponseCount(0)
+        }
+      },
+    )
+    return () => {
+      hasBeenUnmounted = true
+    }
+  }, [])
 
   const handleSubmit = async event => {
     event.preventDefault()
@@ -62,11 +86,18 @@ export default function Landing({ navigate }) {
     })
 
     try {
-      await db
-        .collection('responses')
-        .doc()
-        .set(params)
-      navigate('/thanks')
+      const { data } = await postResponse(params)
+      if (data.status === 'error') {
+        setStatus({
+          type: 'error',
+          issues: data.issues || {
+            base: 'error',
+          },
+          params,
+        })
+      } else {
+        navigate('/thanks')
+      }
     } catch (error) {
       console.error(error)
       setStatus({
