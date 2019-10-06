@@ -6,12 +6,14 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 052 - Cleaning up after subscriptions and promises
+Step 053 - Add a page
 --------
 
 This step makes the following changes:
 
-- In `App.js`, the effects in the `App` and `Landing` components now return cleanup functions to ensure no state is changed after unmount.
+- Add a `routes` directory, with components that render the content for individual routes.
+- Add a `utils` directory, to hold vanilla JavaScript helper code that may be shared between different routes and components.
+- Add a routing switch function in `App.js`, and use it to decide what to render.
 
 Related lessons:
 
