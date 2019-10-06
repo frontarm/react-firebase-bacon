@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { css } from 'styled-components/macro'
 import { getResponseCount, postResponse } from './backend'
+import {
+  Field,
+  StyledButton,
+  StyledCard,
+  StyledClamp,
+  StyledHaiku,
+  StyledIssue,
+} from './components'
 
 const messages = {
   base: {
@@ -123,71 +130,49 @@ function App() {
   }
   const content =
     status.type === 'success' ? (
-      <p>
+      <StyledHaiku>
         Thanks for joining in! <br />
         When we're ready to wow you, <br />
         You'll get an email.
-      </p>
+      </StyledHaiku>
     ) : (
       <form onSubmit={handleSubmit}>
-        <p>
+        <StyledHaiku>
           A social network, <br />
           Where you are the customer. <br />
           Ad free. Launching soon.
-        </p>
+        </StyledHaiku>
         <Field
-          label="Name"
+          label="Your name"
           message={messages.name[unresolvedIssues.name]}
           value={name}
           onChange={setName}
         />
         <Field
-          label="Email"
+          label="Your email"
           message={messages.email[unresolvedIssues.email]}
           type="email"
           value={email}
           onChange={setEmail}
         />
-        {submitIssues.base && <p>{messages.base[submitIssues.base]}</p>}
-        <button type="submit" disabled={!canSubmit}>
+        {submitIssues.base && (
+          <StyledIssue>{messages.base[submitIssues.base]}</StyledIssue>
+        )}
+        <StyledButton type="submit" disabled={!canSubmit}>
           {responseCount === undefined
             ? `Loading`
             : responseCount > 1
             ? `Vouch with ${responseCount} others`
             : `I'll vouch for that`}
-        </button>
+        </StyledButton>
       </form>
     )
 
   return (
-    <div
-      css={css`
-        text-align: center;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-      `}>
-      {content}
-    </div>
+    <StyledClamp>
+      <StyledCard>{content}</StyledCard>
+    </StyledClamp>
   )
 }
-
-/**
- * Renders an <input> inside a <label>, with an optional message.
- */
-const Field = ({ label, message, onChange, ...inputProps }) => (
-  <label
-    css={css`
-      display: block;
-      margin: 1rem 0;
-    `}>
-    {label}:{' '}
-    <input {...inputProps} onChange={event => onChange(event.target.value)} />
-    {message && <p>{message}</p>}
-  </label>
-)
 
 export default App
