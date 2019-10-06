@@ -6,14 +6,14 @@ This is the companion repository to [React, Firebase & Bacon](https://frontarm.c
 Each branch within this repository contains code for one or more steps within the course. [See an outline and installation instructions at the master branch &raquo;](https://github.com/frontarm/react-firebase-bacon)
 
 
-Step 053 - Add a page
+Step 054 - Layout components
 --------
 
 This step makes the following changes:
 
-- Add a `routes` directory, with components that render the content for individual routes.
-- Add a `utils` directory, to hold vanilla JavaScript helper code that may be shared between different routes and components.
-- Add a routing switch function in `App.js`, and use it to decide what to render.
+- Add a layout component in `components/narrowLayoutComponent`.
+- Refactors all route components to use the new `<NarrowCardLayout>` component.
+- Removes padding from the `<Card>` component, so that it can be applied by the layout instead.
 
 Related lessons:
 

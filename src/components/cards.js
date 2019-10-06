@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro'
 
-import { colors, media, radii, shadows } from 'theme'
+import { colors, radii, shadows } from 'theme'
 
 export const StyledCard = styled.div`
   background-color: ${colors.background.card};
@@ -9,12 +9,7 @@ export const StyledCard = styled.div`
   box-shadow: ${shadows.card()};
   margin: 0 auto;
   max-width: 380px;
-  padding: 1rem 3rem;
   position: relative;
   overflow: hidden;
   z-index: 0;
-
-  ${media.smallPhoneOnly`
-    padding: 1rem 2rem;
-  `}
 `
